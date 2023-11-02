@@ -67,14 +67,18 @@ dispatcherNamesDictionary = {
     "Branko Janicijevic": "Branko J",
     "Filip Babic": "Filip B",
     "Nikola Radojevic": "Nikola R",
-    "Uros Milinovic": "Uros M",
+    "Uros Milinovic": "Uros Mil",
     "Dimitrije Poznanovic": "Dimitrije P",
     "Dusan Nedeljkovic": "Dusan N",
     "Luka Zecevic": "Luka Z",
-    "Dzenis Feti": "Dzenis F",
     "Dusan Budimirovic": "Dusan B",
     "Ognjen Drobnjak": "Ognjen D",
-    "Marko Miscevic": "Marko M"
+    "Marko Miscevic": "Marko M",
+    "Nicholas Bejte": "Nikola B",
+    "Lazar Stanojevic": "Lazar S",
+    "Nemanja Antonijevic": "Nemanja A",
+    "Uros Marjanovic": "Uros Mar",
+    "Stefan Korolija": "Stefan K"
 }
 
 
