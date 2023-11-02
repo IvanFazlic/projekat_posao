@@ -1,4 +1,4 @@
-PACKING_ARGUMENTS = {'side': 'left', 'padx': 15, 'pady': 15}
+PACK_ARGS = {'side': 'left', 'padx': 15, 'pady': 15}
 PROCESS_COLUMN = 'Processed'
 PATH_TO_DATA = './Data/Data.xlsx'
 PATH_TO_SERVICE_FILE = './Functions/ClientSecret.json'
@@ -30,9 +30,12 @@ READY = "Spremno"
 NOT_READY = "Load nije spreman"
 
 LOAD_STATUSES = ["Default", "Spremno", "Load nije spreman", "Nisam mogao da dobijem shipping",
-                "Nisam nasao broj", "VoiceM",
-                "Nema adresa u dokumentu",
-                "Pogresan broj na internetu",
-                "Broj stalno nedostupan",
-                "Nije okacen dokument", "Nema odgovarajucih informacija u dokumentu", "Prerano za informacije"]
+                 "Nisam nasao broj", "VoiceM",
+                 "Nema adresa u dokumentu",
+                 "Pogresan broj na internetu",
+                 "Broj stalno nedostupan",
+                 "Nije okacen dokument", "Nema odgovarajucih informacija u dokumentu", "Prerano za informacije"]
+
 SHEET_NAME = "Weekend Track and Trace"
+
+ROUT_ID_CONFIG = {"state": "disabled", "height": 5, "width": 70, "fg_color": "transparent"}

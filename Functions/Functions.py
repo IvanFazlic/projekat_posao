@@ -37,10 +37,12 @@ def create_objects_from_excel():
 
 def create_the_main_screen(loadObjects, connected_sheet):
     app = helperModule.create_main_window()
-    mb.showinfo('Connection', 'Successfully connected')
-    create_initial_window(app)
+    helperModule.successful_connection_to_sheet_notification()
+    scrollableFrame = helperModule.create_scrollable_frame(app)
+    create_initial_window(scrollableFrame)
     for loadObject in loadObjects:
-        load_display(loadObject, app, connected_sheet)
+        load_display(loadObject, scrollableFrame, connected_sheet)
+    scrollableFrame.pack()
     app.mainloop()
 
 
@@ -54,23 +56,22 @@ def create_a_frame(frame, *args):
     create_a_load_frame(frame, args[0], args[1]) if args else create_initial_window(frame)
 
 
-def create_a_load_frame(frame, loadObject, connected_sheet):
+def create_a_load_frame(frame, loadObject: Load, connected_sheet):
     routeId = ct.CTkTextbox(frame)
     routeId.insert("0.0", loadObject.returnId())
-    routeId.configure(state="disabled", height=5, width=70, fg_color="transparent")
-    route = loadObject.returnRoute()
-    routeToDisplay = directory[route[0]] + " - " + directory[route[len(route) - 1]]
+    routeId.configure(**ROUT_ID_CONFIG)
+    routeToDisplay = loadObject.returnRoute()
     labelDispatcher = ct.CTkLabel(master=frame, text=loadObject.returnDispatcher(), fg_color="transparent",
                                   anchor="w", width=120)
     labelRoute = ct.CTkLabel(master=frame, text=routeToDisplay, fg_color="transparent", anchor="w", width=250)
     comboBox = ct.CTkComboBox(master=frame, values=LOAD_STATUSES, width=150)
     button = ct.CTkButton(master=frame, text="Insert",
                           command=lambda: button_function(frame, loadObject, comboBox, connected_sheet), width=150)
-    routeId.pack(**PACKING_ARGUMENTS)
-    labelRoute.pack(**PACKING_ARGUMENTS)
-    labelDispatcher.pack(**PACKING_ARGUMENTS)
-    comboBox.pack(**PACKING_ARGUMENTS)
-    button.pack(**PACKING_ARGUMENTS)
+    routeId.pack(**PACK_ARGS)
+    labelRoute.pack(**PACK_ARGS)
+    labelDispatcher.pack(**PACK_ARGS)
+    comboBox.pack(**PACK_ARGS)
+    button.pack(**PACK_ARGS)
     frame.pack()
 
 
@@ -78,20 +79,20 @@ def create_initial_window(app):
     frame = ct.CTkFrame(master=app, fg_color="transparent")
     # routeId
     ct.CTkLabel(master=frame, text="Invoice", fg_color="transparent", anchor="w", width=70,
-                font=("Segue UI", 14, "bold")).pack(**PACKING_ARGUMENTS)
+                font=("Segue UI", 14, "bold")).pack(**PACK_ARGS)
     # labelRoute
     ct.CTkLabel(master=frame, text="Route", fg_color="transparent", anchor="w", width=250,
-                font=("Segue UI", 14, "bold")).pack(**PACKING_ARGUMENTS)
+                font=("Segue UI", 14, "bold")).pack(**PACK_ARGS)
     # labelDispatcher
     ct.CTkLabel(master=frame, text="Dispatcher", fg_color="transparent", anchor="w", width=120,
                 font=("Segue UI", 14, "bold")).pack(
-        **PACKING_ARGUMENTS)
+        **PACK_ARGS)
     # comboBox
     ct.CTkLabel(master=frame, text="Options", fg_color="transparent", anchor="w", width=150,
-                font=("Segue UI", 14, "bold")).pack(**PACKING_ARGUMENTS)
+                font=("Segue UI", 14, "bold")).pack(**PACK_ARGS)
     # button
     ct.CTkLabel(master=frame, text="Button", fg_color="transparent", anchor="w", width=150,
-                font=("Segue UI", 14, "bold")).pack(**PACKING_ARGUMENTS)
+                font=("Segue UI", 14, "bold")).pack(**PACK_ARGS)
     frame.pack()
 
 

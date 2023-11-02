@@ -5,6 +5,7 @@ import tkinter.messagebox as mb
 from datetime import datetime
 import customtkinter as ct
 
+
 def process_data(myData: pandas.DataFrame):
     """
     :param myData: Data in a form of Pandas DataFrame
@@ -18,6 +19,10 @@ def process_data(myData: pandas.DataFrame):
     myData = myData[myData[PROCESS_COLUMN] != 1]
     loadObject = [Load(data) for data in myData.itertuples()]
     return loadObject
+
+
+def successful_connection_to_sheet_notification():
+    mb.showinfo('Connection', 'Successfully connected')
 
 
 def successful_insertion_notification():
@@ -55,3 +60,7 @@ def create_main_window():
     app.geometry(APP_WINDOW_SIZE)
     ct.CTkLabel(master=app, text="", height=10).pack()
     return app
+
+
+def create_scrollable_frame(app):
+    return ct.CTkScrollableFrame(master=app, fg_color="transparent", width=890, height=440)
