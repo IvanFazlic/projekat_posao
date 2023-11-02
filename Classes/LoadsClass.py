@@ -1,8 +1,10 @@
+from pandas import DataFrame as dataFrame
+
 from ConstantVars.Dictionarys import *
 
 
 class Load:
-    def __init__(self, data):
+    def __init__(self, data: dataFrame):
         self.id = data[1]
         self.route = data[2]
         self.date = data[3]
@@ -16,21 +18,18 @@ class Load:
         for slovo in range(len(self.route) - 1):
             if self.route[slovo:slovo + 2] in directory:
                 lista.append(self.route[slovo:slovo + 2])
-        returnString = directory[lista[0]] + " - " + directory[lista[len(lista)-1]]
+        returnString = directory[lista[0]] + " - " + directory[lista[len(lista) - 1]]
         return returnString
 
     def returnDate(self):
-        return self.date
+        return self.date.strftime("%d.%m.%Y")
 
     def returnId(self):
         return self.id
 
-    def returnEverything(self):
-        print(self.id)
-        print(self.date)
-        print(self.route)
-        print(self.dispatcher)
-
-    def loadFromTo(self) -> str:
-        myList = self.returnRoute()
-        return str(myList[0]) + "-" + str(myList[len(myList) - 1])
+    def acronymFromTo(self):
+        lista = []
+        for slovo in range(len(self.route) - 1):
+            if self.route[slovo:slovo + 2] in directory:
+                lista.append(self.route[slovo:slovo + 2])
+        return lista[0] + "-" + lista[len(lista) - 1]
