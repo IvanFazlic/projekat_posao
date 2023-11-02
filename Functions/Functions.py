@@ -9,47 +9,36 @@ from oauth2client.service_account import ServiceAccountCredentials
 from Classes.LoadsClass import Load
 from ConstantVars.Dictionarys import directory
 from ConstantVars.ConstantAndVars import *
-from datetime import datetime
 
 myData = pd.read_excel(PATH_TO_DATA).fillna("")
 
 
 def connect_to_sheet():
-    currentDay = datetime.now().day
-    currentMonth = datetime.now().month
-    currentYear = datetime.now().year
-
-    currentDay = '0' + str(currentDay) if currentDay < 10 else str(currentDay)
-    currentMonth = '0' + str(currentMonth) if currentMonth < 10 else str(currentMonth)
-    currentYear = str(currentYear)
-    currentTime = currentMonth + "." + currentDay + "." + currentYear + "."
-
+    sheetID = helperModule.today_date_for_sheet()
     creds = ServiceAccountCredentials.from_json_keyfile_name(PATH_TO_SERVICE_FILE, SCOPE)
     client = gspread.authorize(creds)
     try:
-        connected_sheet = client.open("Weekend Track and Trace").worksheet(currentTime)
+        connected_sheet = client.open(SHEET_NAME).worksheet(sheetID)
         return connected_sheet
     except WorksheetNotFound:
-        mb.showerror('Error', 'Worksheet not found. Create the worksheet.')
+        helperModule.worksheet_not_found_error()
         exit()
 
 
 def create_objects_from_excel():
     global myData
-    loadObject = helperModule.process_data(myData)
+    try:
+        loadObject = helperModule.process_data(myData)
+    except WorksheetNotFound:
+        helperModule.worksheet_not_found_error()
+        exit()
     return loadObject
 
 
 def create_the_main_screen(loadObjects, connected_sheet):
-    # create ctk window
-    ct.set_appearance_mode("System")
-    ct.set_default_color_theme("blue")
-    app = ct.CTk()
-    app.geometry(APP_WINDOW_SIZE)
-    ct.CTkLabel(master=app, text="", height=10).pack()
+    app = helperModule.create_main_window()
     mb.showinfo('Connection', 'Successfully connected')
-    frame = ct.CTkFrame(master=app, fg_color="transparent")
-    create_initial_window(frame)
+    create_initial_window(app)
     for loadObject in loadObjects:
         load_display(loadObject, app, connected_sheet)
     app.mainloop()
@@ -85,7 +74,8 @@ def create_a_load_frame(frame, loadObject, connected_sheet):
     frame.pack()
 
 
-def create_initial_window(frame):
+def create_initial_window(app):
+    frame = ct.CTkFrame(master=app, fg_color="transparent")
     # routeId
     ct.CTkLabel(master=frame, text="Invoice", fg_color="transparent", anchor="w", width=70,
                 font=("Segue UI", 14, "bold")).pack(**PACKING_ARGUMENTS)

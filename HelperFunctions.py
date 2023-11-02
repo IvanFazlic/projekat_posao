@@ -2,7 +2,8 @@ import pandas
 from Classes.LoadsClass import Load
 from ConstantVars.ConstantAndVars import *
 import tkinter.messagebox as mb
-
+from datetime import datetime
+import customtkinter as ct
 
 def process_data(myData: pandas.DataFrame):
     """
@@ -37,3 +38,20 @@ def dispatcher_not_found_error():
 
 def updated_data_frame(data, dataFrame):
     dataFrame.loc[dataFrame['Invoice'] == data.returnId(), 'Processed'] = 1
+
+
+def today_date_for_sheet():
+    return datetime.now().strftime("%m.%d.%Y.")
+
+
+def worksheet_not_found_error():
+    mb.showerror('Error', 'Worksheet not found. Create the worksheet.')
+
+
+def create_main_window():
+    ct.set_appearance_mode("System")
+    ct.set_default_color_theme("blue")
+    app = ct.CTk()
+    app.geometry(APP_WINDOW_SIZE)
+    ct.CTkLabel(master=app, text="", height=10).pack()
+    return app

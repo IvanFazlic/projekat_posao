@@ -67,7 +67,7 @@ dispatcherNamesDictionary = {
     "Branko Janicijevic": "Branko J",
     "Filip Babic": "Filip B",
     "Nikola Radojevic": "Nikola R",
-    "Uros Marjanovic": "Uros M",
+    "Uros Milinovic": "Uros M",
     "Dimitrije Poznanovic": "Dimitrije P",
     "Dusan Nedeljkovic": "Dusan N",
     "Luka Zecevic": "Luka Z",

@@ -35,3 +35,4 @@ LOAD_STATUSES = ["Default", "Spremno", "Load nije spreman", "Nisam mogao da dobi
                 "Pogresan broj na internetu",
                 "Broj stalno nedostupan",
                 "Nije okacen dokument", "Nema odgovarajucih informacija u dokumentu", "Prerano za informacije"]
+SHEET_NAME = "Weekend Track and Trace"
