@@ -1,5 +1,4 @@
 from Functions.Functions import *
-connected_sheet = connect_to_sheet()
-loadObjects = CreateObjectsFromExcel()
-CreateTheMainScreen(loadObjects,connected_sheet)
-
+connectedSheet = connect_to_sheet()
+loadObjects = create_objects_from_excel()
+create_the_main_screen(loadObjects, connectedSheet)

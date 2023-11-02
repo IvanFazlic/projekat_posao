@@ -8,19 +8,30 @@ SCOPE = ['https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis
          "https://www.googleapis.com/auth/drive"]
 
 # colors
-BLACK_COLOR = {
+BLACK_COLOR_VALUE = {
     "red": 0,
     "green": 0,
     "blue": 0
 }
-RED_COLOR = {
+RED_COLOR_VALUE = {
     "red": 224 / 255,
     "green": 102 / 255,
     "blue": 102 / 255
 }
-GREEN_COLOR = {
+GREEN_COLOR_VALUE = {
     "red": 52 / 255,
     "green": 168 / 255,
     "blue": 83 / 255
 }
+BLACK_COLOR = 'black'
+RED_COLOR = 'red'
+GREEN_COLOR = 'green'
 READY = "Spremno"
+NOT_READY = "Load nije spreman"
+
+LOAD_STATUSES = ["Default", "Spremno", "Load nije spreman", "Nisam mogao da dobijem shipping",
+                "Nisam nasao broj", "VoiceM",
+                "Nema adresa u dokumentu",
+                "Pogresan broj na internetu",
+                "Broj stalno nedostupan",
+                "Nije okacen dokument", "Nema odgovarajucih informacija u dokumentu", "Prerano za informacije"]

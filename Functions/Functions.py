@@ -1,7 +1,5 @@
 import tkinter.messagebox as mb
-
 from gspread import WorksheetNotFound
-
 import HelperFunctions as helperModule
 import customtkinter as ct
 import gspread
@@ -9,7 +7,7 @@ import pandas as pd
 from ConstantVars.Dictionarys import *
 from oauth2client.service_account import ServiceAccountCredentials
 from Classes.LoadsClass import Load
-from ConstantVars.Dictionarys import directory, loadStatuses
+from ConstantVars.Dictionarys import directory
 from ConstantVars.ConstantAndVars import *
 from datetime import datetime
 
@@ -36,13 +34,13 @@ def connect_to_sheet():
         exit()
 
 
-def CreateObjectsFromExcel():
+def create_objects_from_excel():
     global myData
     loadObject = helperModule.process_data(myData)
     return loadObject
 
 
-def CreateTheMainScreen(loadObjects, connected_sheet):
+def create_the_main_screen(loadObjects, connected_sheet):
     # create ctk window
     ct.set_appearance_mode("System")
     ct.set_default_color_theme("blue")
@@ -53,11 +51,11 @@ def CreateTheMainScreen(loadObjects, connected_sheet):
     frame = ct.CTkFrame(master=app, fg_color="transparent")
     create_initial_window(frame)
     for loadObject in loadObjects:
-        LoadDisplay(loadObject, app, connected_sheet)
+        load_display(loadObject, app, connected_sheet)
     app.mainloop()
 
 
-def LoadDisplay(loadObject, app, connected_sheet):
+def load_display(loadObject, app, connected_sheet):
     frame = ct.CTkFrame(master=app, fg_color="transparent")
     create_a_frame(frame, loadObject, connected_sheet)
     frame.pack()
@@ -76,7 +74,7 @@ def create_a_load_frame(frame, loadObject, connected_sheet):
     labelDispatcher = ct.CTkLabel(master=frame, text=loadObject.returnDispatcher(), fg_color="transparent",
                                   anchor="w", width=120)
     labelRoute = ct.CTkLabel(master=frame, text=routeToDisplay, fg_color="transparent", anchor="w", width=250)
-    comboBox = ct.CTkComboBox(master=frame, values=loadStatuses, width=150)
+    comboBox = ct.CTkComboBox(master=frame, values=LOAD_STATUSES, width=150)
     button = ct.CTkButton(master=frame, text="Insert",
                           command=lambda: button_function(frame, loadObject, comboBox, connected_sheet), width=150)
     routeId.pack(**PACKING_ARGUMENTS)
@@ -111,27 +109,37 @@ def create_initial_window(frame):
 def button_function(f: ct.CTkFrame, data: Load, combo: ct.CTkComboBox, sheet, dataFrame=myData):
     comboBoxValue = combo.get()
     if comboBoxValue == "Default":
-        mb.showwarning("Warning", "ComboBox value is 'Default'")
+        helperModule.combo_box_value_default_error()
     else:
-        dataFrame.loc[dataFrame['Invoice'] == data.returnId(), 'Processed'] = 1
-        try:
-            dataFrame.to_excel('./Data/Data.xlsx', columns=None, index=False)
-            dispatcherName = process_dispatcher(data.returnDispatcher())
-            if comboBoxValue == READY and dispatcherName:
-                UpdateCellValueByDispatcher(sheet, dispatcherName, data.loadFromTo(), "green", 'Something')
-                f.destroy()
-                mb.showinfo('Notification', 'Load is inserted')
-        except FileNotFoundError:
-            mb.showerror('Error', 'No file')
+        dispatcherName = process_dispatcher(data.returnDispatcher())
+        if dispatcherName:
+            try:
+                dataFrame.loc[dataFrame['Invoice'] == data.returnId(), 'Processed'] = 1
+                dataFrame.to_excel(PATH_TO_DATA, columns=None, index=False)
+            except FileNotFoundError:
+                helperModule.file_not_found_error()
+                return
+            if comboBoxValue == READY:
+                update_cell_value_by_dispatcher(sheet, dispatcherName, data.loadFromTo(), GREEN_COLOR,
+                                                comboBoxValue)
+            elif comboBoxValue == NOT_READY:
+                update_cell_value_by_dispatcher(sheet, dispatcherName, data.loadFromTo(), RED_COLOR, comboBoxValue)
+            else:
+                update_cell_value_by_dispatcher(sheet, dispatcherName, data.loadFromTo(), BLACK_COLOR,
+                                                comboBoxValue)
+            f.destroy()
+            helperModule.successful_insertion_notification()
+        else:
+            helperModule.dispatcher_not_found_error()
 
 
-def UpdateCellValueByDispatcher(sheet, dispatcherName, value, color, note):
+def update_cell_value_by_dispatcher(sheet, dispatcherName, value, color, note):
     if color == "black":
-        color = BLACK_COLOR
+        color = BLACK_COLOR_VALUE
     elif color == "red":
-        color = RED_COLOR
+        color = RED_COLOR_VALUE
     elif color == "green":
-        color = GREEN_COLOR
+        color = GREEN_COLOR_VALUE
     else:
         print("Bad color")
         exit()

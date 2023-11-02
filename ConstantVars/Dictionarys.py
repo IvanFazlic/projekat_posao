@@ -76,12 +76,6 @@ dispatcherNamesDictionary = {
     "Ognjen Drobnjak": "Ognjen D",
     "Marko Miscevic": "Marko M"
 }
-loadStatuses = ["Default", "Spremno", "Load nije spreman", "Nisam mogao da dobijem shipping",
-                "Nisam nasao broj", "VoiceM",
-                "Nema adresa u dokumentu",
-                "Pogresan broj na internetu",
-                "Broj stalno nedostupan",
-                "Nije okacen dokument", "Nema odgovarajucih informacija u dokumentu", "Prerano za informacije"]
 
 
 def FromTo(firstCountry, secondCountry):
