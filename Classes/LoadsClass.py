@@ -22,7 +22,7 @@ class Load:
         return returnString
 
     def returnDate(self):
-        return self.date.strftime("%d.%m.%Y")
+        return self.date.strftime("%d.%m.%Y.")
 
     def returnId(self):
         return self.id
